@@ -1,9 +1,10 @@
-﻿using WebApi.DTO;
+﻿using Application.Interfaces;
+using WebApi.DTO;
 using WebApi.Models;
 
 namespace WebApi.Repositories
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly ApplicationDbContext _context;
 

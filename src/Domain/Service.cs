@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Models
+namespace Domain
 {
-    public class CustomerModel
+    public class Service
     {
-        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Phone { get; set; }
+        public TimeSpan Duration { get; set; }
+        public bool Enable { get; set; }
     }
 }
