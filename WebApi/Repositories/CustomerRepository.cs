@@ -11,12 +11,12 @@ namespace WebApi.Repositories
         {
             _context = context;
         }
-        public CustomerModel GetByPhone(string phone)
+        public CustomerModel? GetByPhone(string phone)
         {
-            return _context.Customers.First(p => p.Phone == phone); 
+            return _context.Customers.FirstOrDefault(p => p.Phone == phone); 
         }
 
-        public CustomerModel Add (CustomerDto customer) 
+        public CustomerModel Add(CustomerDto customer) 
         {
             var newCustomer = new CustomerModel
             {

@@ -15,6 +15,7 @@ namespace WebApi.Repositories
         public SchedulingModel Add(SchedulingModel model)
         {
             var entry = _context.Schedulings.Add(model);
+            _context.SaveChanges();
             return entry.Entity;
         } 
     }
