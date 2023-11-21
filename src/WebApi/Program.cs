@@ -7,7 +7,7 @@ builder.Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddApplication()
-    .AddInfrastructure(builder.Configuration);
+    .AddInfrastructureEntityFramework(builder.Configuration);
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

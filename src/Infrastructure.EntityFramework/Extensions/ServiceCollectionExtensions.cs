@@ -9,7 +9,7 @@ namespace Infrastructure.EntityFramework.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureEntityFramework(this IServiceCollection services, IConfiguration configuration)
         {
             return services
                 .AddDbContext<SensieDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("SalaoSensie")))
