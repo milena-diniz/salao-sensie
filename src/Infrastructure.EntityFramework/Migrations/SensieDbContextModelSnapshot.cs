@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi;
 
 #nullable disable
 
-namespace WebApi.Migrations
+namespace Infrastructure.EntityFramework.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231113180158_primeiraMigrations")]
-    partial class primeiraMigrations
+    [DbContext(typeof(SensieDbContext))]
+    partial class SensieDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,7 +22,7 @@ namespace WebApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("WebApi.Models.CustomerModel", b =>
+            modelBuilder.Entity("Domain.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,18 +32,23 @@ namespace WebApi.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.HasIndex("Phone")
+                        .IsUnique();
+
+                    b.ToTable("Customer", (string)null);
                 });
 
-            modelBuilder.Entity("WebApi.Models.SchedulingModel", b =>
+            modelBuilder.Entity("Domain.Scheduling", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,10 +74,12 @@ namespace WebApi.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("Schedulings");
+                    b.HasIndex("StartDateTime", "EndDateTime");
+
+                    b.ToTable("Scheduling", (string)null);
                 });
 
-            modelBuilder.Entity("WebApi.Models.ServiceModel", b =>
+            modelBuilder.Entity("Domain.Service", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,22 +95,23 @@ namespace WebApi.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Services");
+                    b.ToTable("Service", (string)null);
                 });
 
-            modelBuilder.Entity("WebApi.Models.SchedulingModel", b =>
+            modelBuilder.Entity("Domain.Scheduling", b =>
                 {
-                    b.HasOne("WebApi.Models.CustomerModel", "Customer")
+                    b.HasOne("Domain.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApi.Models.ServiceModel", "Service")
+                    b.HasOne("Domain.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)

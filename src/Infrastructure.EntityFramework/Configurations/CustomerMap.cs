@@ -26,6 +26,9 @@ namespace Infrastructure.EntityFramework.Configurations
                 .IsRequired()
                 .HasMaxLength(15);
 
+            builder
+                .HasIndex(x => x.Phone)
+                .IsUnique();
         }
     }
 }
